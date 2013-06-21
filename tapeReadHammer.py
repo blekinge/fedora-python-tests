@@ -43,9 +43,9 @@ def makeRequest(readurl, pool):
     data = None;
     try:
         data = requests.get(url, auth=(fedoraUser, fedoraPass))
-    except:
-        print "Unexpected error:", sys.exc_info()
-        print "Failure on ID: " + str(id)
+    except requests.exceptions.ConnectionError as e:
+        x = "I/O error: {0}".format(e)
+        print "Failure '"+x+"' on ID: " + str(id)
     treturn = int(round(time.time() * 1000))
     if(data != None):
         if not id in data.text.split('\n')[1]:
